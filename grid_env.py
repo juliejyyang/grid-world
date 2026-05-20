@@ -37,25 +37,7 @@ class Gridworld:
 
     
 
-def main():
-    env = gridworld(size=5)
-    env.reset()
 
-    for i in range(50):
-        env.evaluatePolicy()
-        env.updatePolicy()
-        
-    # check that the policy is valid (sums to 1 over actions for each state)
-    per_state_sums = env.P.sum(axis=0)  # sum over the action axis
-    print(per_state_sums)
-
-    print("Value function:")
-    print(env.V)
-    print("Policy (action probabilities):")
-    print(env.P)
-
-if __name__ == "__main__":
-    main()
 
 
 
