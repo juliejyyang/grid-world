@@ -19,6 +19,7 @@ class Gridworld:
         if r < self.size - 1: actions.append(1)
         if c > 0: actions.append(2)
         if c < self.size - 1: actions.append(3)
+        
         return actions
 
     def nextState(self, action, r, c):
