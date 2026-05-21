@@ -4,20 +4,20 @@ class Agent:
     def __init__(self, env, gamma=0.9):
         self.env = env
         self.gamma = gamma
-        self.V = np.zeros((env.size, env.size))  # value function, one cell per state
-        self.P = np.zeros((len(env.action_space), env.size, env.size))  # policy, one per (action, state(r, c)) pair
-        
+        self.V = np.zeros((env.rows, env.cols))  # value function, one cell per state
+        self.P = np.zeros((len(env.action_space), env.rows, env.cols))  # policy, one per (action, state(r, c)) pair
+
         # initialize the policy to be uniform (1/possible_actions) over allowed actions in each state
-        for r in range(self.env.size):
-            for c in range(self.env.size):
+        for r in range(self.env.rows):
+            for c in range(self.env.cols):
                 possible_actions = self.env.allowedActions(r, c)
                 for action in possible_actions:
                     self.P[action][r][c] = 1.0 / len(possible_actions) if len(possible_actions) > 0 else 0.0
 
     def evaluatePolicy(self):
-        Vnew = np.zeros((self.env.size, self.env.size))
-        for r in range(self.env.size):
-            for c in range(self.env.size):
+        Vnew = np.zeros((self.env.rows, self.env.cols))
+        for r in range(self.env.rows):
+            for c in range(self.env.cols):
                 # the goal is terminal so we can skip it since its value is always 0
                 if (r, c) == self.env.goal_state:
                     continue
@@ -32,8 +32,8 @@ class Agent:
         self.V = Vnew # update the value function 
 
     def updatePolicy(self):
-        for r in range(self.env.size):
-            for c in range(self.env.size):
+        for r in range(self.env.rows):
+            for c in range(self.env.cols):
                 if (r, c) == self.env.goal_state:
                     continue
                 possible_actions = self.env.allowedActions(r, c)
@@ -55,7 +55,7 @@ class Agent:
                         nmax += 1 
                 # update the policy to be uniform over the actions that achieve the maximum value, enumerate them
                 for i, action in enumerate(possible_actions):
-                    self.P[action][r][c] = 1.0 / nmax if vs[i] == vmax else 0.0 
+                    self.P[action][r][c] = 1.0 / nmax if abs(vs[i] - vmax) < 1e-10 else 0.0
 
     def train(self, iterations = 50):
         for i in range(iterations):
