@@ -1,6 +1,4 @@
-﻿# grid-world
-
- simple implementation of policy iteration using DP on a gridworld MDP with the purpose of learning the fundamentals of RL
+simple implementation of policy iteration using DP on a gridworld MDP with the purpose of learning the fundamentals of RL
 
  ### Problem
  an agent navigates an NxN grid from the top-left corner (0,0) to the bottom right
