@@ -26,7 +26,7 @@ class Agent:
                 for action in possible_actions:
                     prob = self.P[action][r][c] # transition probability for action from state (r,c)
                     next_state = self.env.nextState(action, r, c) # look up the next state distribution for this action 
-                    reward = self.env.reward(r, c, action, next_state) # compute the reward for taking this action from state (r,c)
+                    reward = self.env.reward(next_state) # compute the reward for taking this action from state (r,c)
                     v += prob * (reward + self.gamma * self.V[next_state]) # update the value function using the Bellman equation 
                 Vnew[r][c] = v
         self.V = Vnew # update the value function 
@@ -45,7 +45,7 @@ class Agent:
                 for action in possible_actions:
                     # compute the value of taking this action from state (r,c) using the current value function
                     next_state = self.env.nextState(action, r, c)
-                    reward = self.env.reward(r, c, action, next_state)
+                    reward = self.env.reward(next_state)
                     v = reward + self.gamma * self.V[next_state] 
                     vs.append(v)
                     if vmax is None or v > vmax:

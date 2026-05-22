@@ -6,7 +6,7 @@ wind_strength = np.array([0, 0, 0, 1, 1, 1, 2, 2, 1, 0])
 
 class WindyGridworld (Gridworld):
     def __init__(self, rows = 7, cols = 10):
-        super().__init__(rows, cols)
+        super().__init__(rows, cols, goal_row = 3, goal_col = 7, start_row = 3, start_col = 0)
 
     def nextState(self, action, r, c):
         if action == 0: #up

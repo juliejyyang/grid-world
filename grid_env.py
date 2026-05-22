@@ -29,7 +29,7 @@ class Gridworld:
         elif action == 3: # right
             return (r, min(c + 1, self.cols - 1))
 
-    def reward(self, r, c, action, next_state):
+    def reward(self, next_state):
         return 0.0 if next_state == self.goal_state else -1.0
 
     
