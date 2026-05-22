@@ -51,7 +51,7 @@ class Agent:
                     if vmax is None or v > vmax:
                         vmax = v
                         nmax = 1
-                    elif v == vmax:
+                    elif abs(v - vmax) < 1e-10:  
                         nmax += 1 
                 # update the policy to be uniform over the actions that achieve the maximum value, enumerate them
                 for i, action in enumerate(possible_actions):

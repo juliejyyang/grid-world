@@ -8,7 +8,7 @@ def visualize(agent, title="Gridworld"):
 
     fig, ax = plt.subplots(figsize = (env.cols, env.rows))
 
-    im = ax.imshow(V, cmap='viridis', origin='upper')
+    im = ax.imshow(V, cmap='PiYG', origin='upper', alpha=0.5)
     plt.colorbar(im, ax=ax, label='V(s)')
 
     arrows = {
@@ -21,20 +21,19 @@ def visualize(agent, title="Gridworld"):
     for r in range(env.rows):
         for c in range(env.cols):
             if (r, c) == env.goal_state:
-                ax.text(c, r, 'goal', ha='center', va='center', color='white', fontsize=10, fontweight='bold')
+                ax.text(c, r, 'goal', ha='center', va='center', color='black', fontsize=10, fontweight='bold')
                 continue
             if (r, c) == (env.start_row, env.start_col):
-                ax.text(c, r - 0.35, 'start', ha='center', va='center', color='white', fontsize=10, fontweight='bold')
+                ax.text(c, r - 0.35, 'start', ha='center', va='center', color='black', fontsize=10, fontweight='bold')
 
             for action, (dx, dy) in arrows.items():
                 if P[action, r, c] > 0:
-                    ax.arrow(c, r, dx, dy, head_width=0.1, head_length=0.1, fc='white', ec='white', length_includes_head=True)
+                    ax.arrow(c, r, dx, dy, head_width=0.05, head_length=0.05, fc='black', ec='black', length_includes_head=True)
 
-            ax.text(c, r+0.35, f"{V[r, c]:.1f}", ha='center', va='center', color='white', fontsize=7)
+            ax.text(c, r+0.35, f"{V[r, c]:.1f}", ha='center', va='center', color='black', fontsize=7)
 
     ax.set_xticks(range(env.cols))
     ax.set_yticks(range(env.rows))
     ax.set_title(title)
     plt.tight_layout()
     plt.show()
-    

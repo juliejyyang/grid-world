@@ -9,7 +9,7 @@ class WindySarsaAgent:
         self.gamma = gamma
 
         #initialize Q(s,a) with all pairs as 1 and terminal state as 0
-        self.Q = np.ones((len(env.action_space), env.rows, env.cols))
+        self.Q = np.zeros((len(env.action_space), env.rows, env.cols))
         for action in env.action_space:
             self.Q[action][env.goal_state] = 0.0 
 
@@ -40,4 +40,17 @@ class WindySarsaAgent:
                 # update Q value using the SARSA update rule
                 self.Q[action][r][c] += self.step_size * (reward + self.gamma * self.Q[next_action][next_r][next_c] - self.Q[action][r][c])
                 r, c, action = next_r, next_c, next_action 
+
+        # calculate the value function from the learned Q values
+        self.V = self.Q.max(axis=0)
+
+        # derive the policy from the learned Q values
+        self.P = np.zeros_like(self.Q)
+        self.V = self.Q.max(axis=0)
+        for r in range(self.env.rows):
+            for c in range(self.env.cols):
+                best = self.Q[:, r, c].max()
+                ties = [a for a in self.env.action_space if self.Q[a, r, c] == best]
+                for a in ties:
+                    self.P[a, r, c] = 1.0 / len(ties)
         
