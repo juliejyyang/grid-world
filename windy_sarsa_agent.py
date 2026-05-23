@@ -8,10 +8,8 @@ class WindySarsaAgent:
         self.epsilon = epsilon
         self.gamma = gamma
 
-        #initialize Q(s,a) with all pairs as 1 and terminal state as 0
+        #initialize Q(s,a) with zeros, one entry per (action, state(r,c)) pair, initialize the goal state to have 0 value for all actions since it's terminal
         self.Q = np.zeros((len(env.action_space), env.rows, env.cols))
-        for action in env.action_space:
-            self.Q[action][env.goal_state] = 0.0 
 
     def chooseAction(self, r, c):
         # choose an action from state (r,c) using epsilon-greedy exploration strategy
@@ -46,7 +44,6 @@ class WindySarsaAgent:
 
         # derive the policy from the learned Q values
         self.P = np.zeros_like(self.Q)
-        self.V = self.Q.max(axis=0)
         for r in range(self.env.rows):
             for c in range(self.env.cols):
                 best = self.Q[:, r, c].max()

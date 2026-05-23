@@ -30,7 +30,7 @@ class Gridworld:
             return (r, min(c + 1, self.cols - 1))
 
     def reward(self, next_state):
-        return 0.0 if next_state == self.goal_state else -1.0
+        return -1.0
 
     
 
